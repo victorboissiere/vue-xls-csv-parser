@@ -14,14 +14,14 @@
     methods: {
       upload(event) {
         if (event.target.files.length !== 1) {
-          alert('An error has occured'); // eslint-disable-line
+          alert('No files have been selected'); // eslint-disable-line
           return;
         }
         const file = event.target.files[0];
         parseFile(file).then((results) => {
-          console.log('results', results);
+          this.$emit('fileDataReceived', results);
         }).catch((error) => {
-          console.error('Something went wrong', error);
+          alert(error); // eslint-disable-line
         });
       },
     },

@@ -6,7 +6,7 @@ function parseFileExcelFile(file, callback) {
   reader.onload = event =>
     parseXlsx(event.target.result)
     .then(result => callback(result))
-    .catch(error => callback({ error }));
+    .catch(error => callback(error));
 
   reader.readAsBinaryString(file);
 }
@@ -16,8 +16,8 @@ export default htmlFile =>
   new Promise((resolve, reject) => {
     parseFileExcelFile(htmlFile, (result) => {
       if (result.error) {
-        reject(result.error);
+        return reject(result.error);
       }
-      resolve(result.worksheet);
+      return resolve(result.worksheet);
     });
   });

@@ -51,6 +51,9 @@
         </div>
       </div>
     </div>
+    <div class="column-validation">
+      <a href="#" @click="validate">Validate</a>
+    </div>
   </div>
 </template>
 
@@ -59,7 +62,7 @@
   import _ from 'lodash';
 
   export default {
-    name: 'CatalogColumnChooser',
+    name: 'ColumnChooser',
     components: { Multiselect },
     props: {
       userColumns: {
@@ -80,6 +83,11 @@
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
       },
     },
+    watch: {
+      userColumns(newColumns) {
+        this.fillLocalColumns(newColumns);
+      },
+    },
     methods: {
       isSelectedValueOptional(selectedValue) {
         return _.find(this.optionalColumns, column => column.value === selectedValue) !== undefined;
@@ -96,6 +104,28 @@
           }
         });
       },
+      validate() {
+        const hasAllNeededSelections = this.localColumns.every(column => column.selection !== null);
+        if (!hasAllNeededSelections) {
+          alert('You need to select all columns'); // elint-disable-line
+        } else {
+          this.$emit('onValidate', this.localColumns.map(localColumn => ({
+            column: localColumn.selection.value,
+            data: localColumn.data,
+          })));
+        }
+      },
+      fillLocalColumns(columns) {
+        const availableOptions = this.requiredColumns.concat(this.optionalColumns);
+
+        this.localColumns = columns.map(column => ({
+          name: column.name,
+          displayedData: _.take(column.data, 4),
+          data: column.data,
+          options: _.clone(availableOptions),
+          selection: null,
+        }));
+      },
     },
     data() {
       return {
@@ -103,15 +133,7 @@
       };
     },
     mounted() {
-      const availableOptions = this.requiredColumns.concat(this.optionalColumns);
-
-      this.localColumns = this.userColumns.map(column => ({
-        name: column.name,
-        displayedData: _.take(column.data, 4),
-        data: column.data,
-        options: _.clone(availableOptions),
-        selection: null,
-      }));
+      this.fillLocalColumns(this.userColumns);
     },
   };
 </script>

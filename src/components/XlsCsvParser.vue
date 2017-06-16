@@ -1,27 +1,35 @@
 <template>
   <div class="xls-csv-parser">
-    <parse-file></parse-file>
-    <catalog-column-chooser
+    <parse-file @fileDataReceived="fileDataReceived"></parse-file>
+    <column-chooser v-if="showColumnChooser"
       :userColumns="userColumns"
       :requiredColumns="requiredColumns"
       :optionalColumns="optionalColumns"
-    ></catalog-column-chooser>
+      @onValidate="onValidate"
+    ></column-chooser>
   </div>
 </template>
 
 <script>
-  import CatalogColumnChooser from './ColumnChooser';
+  import ColumnChooser from './ColumnChooser';
   import ParseFile from './ParseFile';
 
   export default {
     name: 'XlsCsvParser',
-    components: { CatalogColumnChooser, ParseFile },
+    components: { ColumnChooser, ParseFile },
+    methods: {
+      fileDataReceived(fileData) {
+        this.userColumns = fileData;
+        this.showColumnChooser = true;
+      },
+      onValidate(result) {
+        console.log('reuslt', result);
+      },
+    },
     data() {
       return {
-        userColumns: [
-          { name: 'column1', data: ['row1', 'row2'] },
-          { name: 'column2', data: ['row1', 'row2'] },
-        ],
+        showColumnChooser: false,
+        userColumns: [],
         requiredColumns: [
           {
             name: 'Required name',
@@ -29,7 +37,7 @@
           },
           {
             name: 'Required Description',
-            value: 'name',
+            value: 'description',
           },
         ],
         optionalColumns: [
