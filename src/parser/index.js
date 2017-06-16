@@ -5,7 +5,7 @@ function parseFileExcelFile(file, callback) {
 
   reader.onload = event =>
     parseXlsx(event.target.result)
-    .then(result => callback(result)
+    .then(result => callback(result))
     .catch(error => callback({ error }));
 
   reader.readAsBinaryString(file);
