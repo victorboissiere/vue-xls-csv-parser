@@ -7,6 +7,10 @@
       :optionalColumns="optionalColumns"
       @onValidate="onValidate"
     ></column-chooser>
+    <div class="parser-hidden-columns-input" v-for="(result, i) in results">
+      <input type="hidden" :name="`column[${i}]`" :value="result.column">
+      <input type="hidden" v-for="(data, j) in result.data" :name="`data[${i}][${j}]`" :value="data">
+    </div>
   </div>
 </template>
 
@@ -19,16 +23,20 @@
     components: { ColumnChooser, ParseFile },
     methods: {
       fileDataReceived(fileData) {
+        this.results = [];
         this.userColumns = fileData;
         this.showColumnChooser = true;
       },
-      onValidate(result) {
-        console.log('reuslt', result);
+      onValidate(results) {
+        this.results = results;
+        this.$emit('onValidate', results);
       },
     },
     data() {
       return {
         showColumnChooser: false,
+        showHiddenInputs: false,
+        results: [],
         userColumns: [],
         requiredColumns: [
           {
