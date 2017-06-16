@@ -1,28 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+    <xls-csv-parser></xls-csv-parser>
   </div>
 </template>
 
 <script>
-import Hello from './components/Hello';
+import XlsCsvParser from './components/XlsCsvParser';
 
 export default {
   name: 'app',
   components: {
-    Hello,
+    XlsCsvParser,
   },
 };
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
