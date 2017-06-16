@@ -5,7 +5,7 @@ function parseFileExcelFile(file, callback) {
 
   reader.onload = event =>
     parseXlsx(event.target.result)
-    .then(data => callback({ data }))
+    .then(result => callback(result)
     .catch(error => callback({ error }));
 
   reader.readAsBinaryString(file);
@@ -18,6 +18,6 @@ export default htmlFile =>
       if (result.error) {
         reject(result.error);
       }
-      resolve(result.data);
+      resolve(result.worksheet);
     });
   });
