@@ -18,7 +18,6 @@ export default (file) => {
     return Promise.reject({ error: 'The worksheet is empty' });
   }
 
-
   const transposedMatrix = _.unzip(json);
   const normalizedOutput = transposedMatrix
     .map(columnRows => ({

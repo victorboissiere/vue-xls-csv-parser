@@ -1,6 +1,17 @@
-# vue-xls-csv-parser
+# Vue XLS/CSV parser
 
-> A Vue.js project
+**Project currently in development. You should not use it in production for now**
+
+I hope to make a first usable version at the end of July/August 2017.
+Please come back soon.
+
+## Description
+
+Coming soon...
+
+## Tests
+
+Simpliy run `yarn mocha`.
 
 ## Build Setup
 
