@@ -2,8 +2,8 @@ const _ = require('lodash');
 const expect = require('chai').expect;
 const parseXlsxFile = require('../../src/parser/xlsx-parser').default;
 
-describe('XLSX parsing', () => {
-  const tests = [
+describe('File parsing', () => {
+  const xlsxTests = [
     {
       filename: 'simple',
       description: 'Simple file',
@@ -34,9 +34,32 @@ describe('XLSX parsing', () => {
       errorMessage: 'File has some undefined values',
     },
   ];
-  tests.forEach((test) => {
-    it(test.description, () =>
-      parseXlsxFile(`./test/mocha/data/xlsx/${test.filename}.xlsx`).then(({ worksheet }) => {
+
+  const csvTests = [
+    {
+      filename: 'simple',
+      description: 'Simple',
+      columnNumber: 3,
+      rowNumber: 2,
+    },
+    {
+      filename: 'empty_file',
+      description: 'Empty file',
+      columnNumber: 0,
+      rowNumber: 0,
+      errorMessage: 'The worksheet is empty',
+    },
+    {
+      filename: 'only_headers',
+      description: 'File with no rows and only headers',
+      columnNumber: 3,
+      rowNumber: 0,
+    },
+  ];
+
+  const runTests = (tests, directory, extension) => tests.forEach((test) => {
+    it(`[${directory}] test.description`, () =>
+      parseXlsxFile(`./test/mocha/data/${directory}/${test.filename}.${extension}`).then(({ worksheet }) => {
         expect(test).to.not.have.key('errorMessage');
         expect(worksheet).to.be.an('array');
         expect(worksheet).to.have.lengthOf(test.columnNumber, 'Wrong number of columns');
@@ -45,12 +68,15 @@ describe('XLSX parsing', () => {
           expect(column).to.have.key('name', 'data');
           expect(column.data).to.have.lengthOf(test.rowNumber, 'Wrong number of rows');
         });
-      }).catch(({ error }) => {
+      }).catch((errorData) => {
         if (!_.has(test, 'errorMessage')) {
-          throw new Error('Should not have failed with error : ', errorMessage);
-        } else if (error) {
-          expect(error).to.equals(test.errorMessage);
+          throw new Error(`Should not have failed with error : ${errorData}`);
+        } else {
+          expect(errorData.error).to.equals(test.errorMessage);
         }
       }));
   });
+
+  runTests(xlsxTests, 'xlsx', 'xlsx');
+  runTests(csvTests, 'csv', 'csv');
 });
