@@ -3,8 +3,7 @@
     <parse-file @fileDataReceived="fileDataReceived"></parse-file>
     <column-chooser v-if="showColumnChooser"
       :userColumns="userColumns"
-      :requiredColumns="requiredColumns"
-      :optionalColumns="optionalColumns"
+      :columns="columns"
       @onValidate="onValidate"
     ></column-chooser>
     <div class="parser-hidden-columns-input" v-for="(result, i) in results">
@@ -15,15 +14,29 @@
 </template>
 
 <script>
+  import _ from 'lodash';
   import ColumnChooser from './ColumnChooser';
   import ParseFile from './ParseFile';
 
   export default {
     name: 'XlsCsvParser',
     components: { ColumnChooser, ParseFile },
+    props: {
+      // TODO: test and refactor
+      columns: {
+        type: Array,
+        required: true,
+        validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
+      },
+    },
     methods: {
       fileDataReceived(fileData) {
         this.results = [];
+        if (fileData.length < this.columns.length) {
+          // TODO: display list of required columns in alert box
+          alert(`You do not have enough columns. Required : ${this.columns.join(', ')}`); // eslint-disable-line
+          return;
+        }
         this.userColumns = fileData;
         this.showColumnChooser = true;
       },
@@ -38,19 +51,6 @@
         showHiddenInputs: false,
         results: [],
         userColumns: [],
-        requiredColumns: [
-          {
-            name: 'Required name',
-            value: 'name',
-          },
-          {
-            name: 'Required Description',
-            value: 'description',
-          },
-        ],
-        optionalColumns: [
-          { name: 'other', value: 'other' },
-        ],
       };
     },
   };

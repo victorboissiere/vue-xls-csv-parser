@@ -1,6 +1,6 @@
 <template>
   <div class="catalog-column-chooser">
-    <div v-for="(column, index) in localColumns">
+    <div v-for="(column, index) in localUserColumns">
       <div class="row">
         <div class="col-md-6">
           <div class="panel panel-success" :class="{ 'panel-success': column.selection, 'panel-danger': !column.selection }">
@@ -65,37 +65,28 @@
     name: 'ColumnChooser',
     components: { Multiselect },
     props: {
+      // TODO: refactor and test
       userColumns: {
         type: Array,
         required: true,
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'data')),
       },
-      requiredColumns: {
+      columns: {
         type: Array,
         required: true,
-        validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
-      },
-      // TODO: do not forget to test
-      optionalColumns: {
-        type: Array,
-        default: () => [],
-        // TODO: refactor
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
       },
     },
     watch: {
       userColumns(newColumns) {
-        this.fillLocalColumns(newColumns);
+        this.fillLocalUserColumns(newColumns);
       },
     },
     methods: {
-      isSelectedValueOptional(selectedValue) {
-        return _.find(this.optionalColumns, column => column.value === selectedValue) !== undefined;
-      },
       onSelectChange({ value: selectedValue }, id) { // eslint-disable-line
-        if (this.isSelectedValueOptional(selectedValue)) return;
+        if (this.optionalValues.indexOf(selectedValue) !== -1) return;
 
-        _.forEach(this.localColumns, (column, index) => {
+        _.forEach(this.localUserColumns, (column, index) => {
           if (index !== id) {
             const hasSelectionConflict = column.selection && column.selection.value === selectedValue;
             if (hasSelectionConflict) {
@@ -105,35 +96,52 @@
         });
       },
       validate() {
-        const hasAllNeededSelections = this.localColumns.every(column => column.selection !== null);
-        if (!hasAllNeededSelections) {
+        const hasMadeAllSelections = this.localUserColumns.every(column => column.selection !== null);
+        if (!hasMadeAllSelections) {
           alert('You need to select all columns'); // eslint-disable-line
         } else {
-          this.$emit('onValidate', this.localColumns.map(localColumn => ({
+          const selectedRequiredValues = _
+            .map(this.localUserColumns, 'selection.value')
+            .filter(value => this.requiredValues.indexOf(value) !== -1);
+
+          const missingValues = _.difference(this.requiredValues, selectedRequiredValues);
+          if (missingValues.length > 0) {
+            alert(`Missing required columns : ${missingValues.join(', ')}`);
+            return;
+          }
+
+          this.$emit('onValidate', this.localUserColumns.map(localColumn => ({
             column: localColumn.selection.value,
             data: localColumn.data,
           })));
         }
       },
-      fillLocalColumns(columns) {
-        const availableOptions = this.requiredColumns.concat(this.optionalColumns);
-
-        this.localColumns = columns.map(column => ({
+      fillLocalUserColumns(newColumns) {
+        this.localUserColumns = newColumns.map(column => ({
           name: column.name,
           displayedData: _.take(column.data, 4),
           data: column.data,
-          options: _.clone(availableOptions),
+          options: _.clone(this.columns),
           selection: null,
         }));
       },
     },
     data() {
       return {
-        localColumns: [],
+        localUserColumns: [],
+        requiredValues: [],
+        optionalValues: [],
       };
     },
     mounted() {
-      this.fillLocalColumns(this.userColumns);
+      this.fillLocalUserColumns(this.userColumns);
+      // TODO: refactor
+      this.optionalValues = this.columns
+        .filter(column => column.isOptional)
+        .map(column => column.value);
+      this.requiredValues = this.columns
+        .filter(column => !column.isOptional)
+        .map(column => column.value);
     },
   };
 </script>
