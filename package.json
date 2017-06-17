@@ -4,9 +4,11 @@
   "description": "A Vue.js project",
   "author": "Victor Boissiere <victor.boissiere@gmail.com>",
   "private": true,
+  "main": "dist/xls-csv-parser.min.js",
   "scripts": {
     "dev": "node build/dev-server.js ",
     "start": "node build/dev-server.js",
+    "bundle:dist": "rm -rf dist && webpack --config build/webpack.bundle.conf.js",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "mocha": "mocha --compilers js:babel-core/register test/mocha",
