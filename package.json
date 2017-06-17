@@ -7,12 +7,10 @@
   "main": "dist/xls-csv-parser.min.js",
   "scripts": {
     "dev": "node build/dev-server.js ",
-    "start": "node build/dev-server.js",
     "bundle:dist": "rm -rf dist && webpack --config build/webpack.bundle.conf.js",
-    "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "mocha": "mocha --compilers js:babel-core/register test/mocha",
-    "test": "npm run unit",
+    "test": "npm run mocha && npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {

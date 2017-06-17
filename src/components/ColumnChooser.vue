@@ -107,7 +107,7 @@
       validate() {
         const hasAllNeededSelections = this.localColumns.every(column => column.selection !== null);
         if (!hasAllNeededSelections) {
-          alert('You need to select all columns'); // elint-disable-line
+          alert('You need to select all columns'); // eslint-disable-line
         } else {
           this.$emit('onValidate', this.localColumns.map(localColumn => ({
             column: localColumn.selection.value,
