@@ -106,7 +106,7 @@
 
           const missingValues = _.difference(this.requiredValues, selectedRequiredValues);
           if (missingValues.length > 0) {
-            alert(`Missing required columns : ${missingValues.join(', ')}`);
+            alert(`Missing required columns : ${missingValues.join(', ')}`); // eslint-disable-line
             return;
           }
 
