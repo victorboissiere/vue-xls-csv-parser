@@ -19,4 +19,4 @@ before_script:
 script:
   - jdk_switcher use oraclejdk8
   - rm google-chrome-stable_current_amd64.deb
-  - yarn lint && yarn test && yarn build && bash ./check-repository.sh
+  - yarn lint && yarn test && bash ./check-repository.sh
