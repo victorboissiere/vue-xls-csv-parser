@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="column-validation">
-      <a href="#" @click="validate">Validate</a>
+      <a href="#" @click="validate" id="validate-columns">Validate</a>
     </div>
   </div>
 </template>
