@@ -1,9 +1,8 @@
 {
   "name": "vue-xls-csv-parser",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Victor Boissiere <victor.boissiere@gmail.com>",
-  "private": true,
+  "description": "VueJS Xls/CSV parser with ability to match required columns",
+  "author": "Victor Boissiere <contact@gitcommit.fr>",
   "main": "dist/xls-csv-parser.min.js",
   "scripts": {
     "dev": "node build/dev-server.js ",
@@ -90,5 +89,15 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/victorboissiere/vue-xls-csv-parser"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/AceMetrix/npm-license/blob/master/LICENSE"
+    }
   ]
 }
