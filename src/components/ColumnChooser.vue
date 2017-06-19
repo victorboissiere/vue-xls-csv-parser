@@ -96,24 +96,30 @@
         });
       },
       validate() {
+        console.log('validate');
         const hasMadeAllSelections = this.localUserColumns.every(column => column.selection !== null);
         if (!hasMadeAllSelections) {
+          console.log('select all columns');
           alert('You need to select all columns'); // eslint-disable-line
         } else {
+          console.log('else');
           const selectedRequiredValues = _
             .map(this.localUserColumns, 'selection.value')
             .filter(value => this.requiredValues.indexOf(value) !== -1);
 
           const missingValues = _.difference(this.requiredValues, selectedRequiredValues);
           if (missingValues.length > 0) {
+            console.log('missing values');
             alert(`Missing required columns : ${missingValues.join(', ')}`); // eslint-disable-line
             return;
           }
 
-          this.$emit('onValidate', this.localUserColumns.map(localColumn => ({
+          this.results = this.localUserColumns.map(localColumn => ({
             column: localColumn.selection.value,
             data: localColumn.data,
-          })));
+          }));
+          console.log('this results', this.results);
+          this.$emit('onValidate', this.results);
         }
       },
       fillLocalUserColumns(newColumns) {
@@ -131,6 +137,7 @@
         localUserColumns: [],
         requiredValues: [],
         optionalValues: [],
+        results: [],
       };
     },
     mounted() {
