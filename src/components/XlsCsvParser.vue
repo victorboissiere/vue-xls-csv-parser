@@ -38,7 +38,8 @@
     methods: {
       fileDataReceived(fileData) {
         this.results = [];
-        if (fileData.length < this.columns.length) {
+        const requiredColumns = this.columns.filter(column => !column.isOptional);
+        if (fileData.length < requiredColumns.length) {
           // TODO: display list of required columns in alert box
           alert(`You do not have enough columns. Required : ${this.columns.join(', ')}`); // eslint-disable-line
           return;
