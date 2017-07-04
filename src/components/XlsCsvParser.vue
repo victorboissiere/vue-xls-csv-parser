@@ -4,11 +4,11 @@
     <column-chooser v-if="showColumnChooser"
       :userColumns="userColumns"
       :columns="columns"
+      :buttonId="buttonId"
       @onValidate="onValidate"
     ></column-chooser>
     <div class="parser-hidden-columns-input" v-for="(result, i) in results">
-      <input type="hidden" :name="`column[${i}]`" :value="result.column">
-      <input type="hidden" v-for="(data, j) in result.data" :name="`data[${i}][${j}]`" :value="data">
+      <input type="hidden" v-for="(data, i) in result.data" :name="`${result.column}[${i}]`" :value="data">
     </div>
   </div>
 </template>
@@ -27,6 +27,10 @@
         type: Array,
         required: true,
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
+      },
+      buttonId: {
+        type: String,
+        default: () => null,
       },
     },
     methods: {
