@@ -2,7 +2,8 @@
   <div class="app">
     Example
     <br>
-    <xls-csv-parser :columns="columns" @onValidate="onValidate"></xls-csv-parser>
+    <xls-csv-parser :columns="columns" validateButtonId="validate" @onValidate="onValidate"></xls-csv-parser>
+    <a href="https://gitcommit.fr" id="validate">Validate</a>
     <br><br>
     <div class="results" v-if="results">
       <h3>Results:</h3>

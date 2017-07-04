@@ -1,6 +1,5 @@
 <template>
   <div class="parse-file">
-    Parse file
     <input type="file" v-on:change="upload" />
   </div>
 

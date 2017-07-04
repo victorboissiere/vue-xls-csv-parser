@@ -2,9 +2,10 @@
   <div class="xls-csv-parser">
     <parse-file @fileDataReceived="fileDataReceived"></parse-file>
     <column-chooser v-if="showColumnChooser"
+                    ref="columnChooser"
       :userColumns="userColumns"
       :columns="columns"
-      :buttonId="buttonId"
+      :showValidateButton="showValidateButton"
       @onValidate="onValidate"
     ></column-chooser>
     <div class="parser-hidden-columns-input" v-for="(result, i) in results">
@@ -28,7 +29,7 @@
         required: true,
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
       },
-      buttonId: {
+      validateButtonId: {
         type: String,
         default: () => null,
       },
@@ -48,11 +49,26 @@
         this.results = results;
         this.$emit('onValidate', results);
       },
+      validate(event) {
+        event.preventDefault();
+        if (!this.showColumnChooser) {
+          alert('You need to select a file'); // eslint-disable-line
+        } else {
+          this.$refs.columnChooser.validate();
+        }
+      },
+    },
+    mounted() {
+      if (this.validateButtonId) {
+        this.showValidateButton = false;
+        document.getElementById(this.validateButtonId).addEventListener('click', this.validate);
+      }
     },
     data() {
       return {
         showColumnChooser: false,
         showHiddenInputs: false,
+        showValidateButton: true,
         results: [],
         userColumns: [],
       };

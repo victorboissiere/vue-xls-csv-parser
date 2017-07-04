@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <div class="column-validation" v-if="!buttonId">
+    <div class="column-validation" v-if="showValidateButton">
       <a href="#" @click="validate" id="validate-columns">Validate</a>
     </div>
   </div>
@@ -76,9 +76,9 @@
         required: true,
         validator: columns => columns.every(column => _.has(column, 'name') && _.has(column, 'value')),
       },
-      buttonId: {
-        type: String,
-        default: () => null,
+      showValidateButton: {
+        type: Boolean,
+        default: () => true,
       },
     },
     watch: {
@@ -141,9 +141,6 @@
     },
     mounted() {
       this.fillLocalUserColumns(this.userColumns);
-      if (this.buttonId !== null) {
-        document.getElementById(this.buttonId).addEventListener('click', this.validate);
-      }
       // TODO: refactor
       this.optionalValues = this.columns
         .filter(column => column.isOptional)
