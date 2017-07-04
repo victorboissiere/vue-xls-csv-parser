@@ -1,6 +1,7 @@
 <template>
   <div class="xls-csv-parser">
     <parse-file @fileDataReceived="fileDataReceived"></parse-file>
+    <br><br>
     <column-chooser v-if="showColumnChooser"
                     ref="columnChooser"
       :userColumns="userColumns"
