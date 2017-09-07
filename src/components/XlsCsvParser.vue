@@ -1,6 +1,6 @@
 <template>
   <div class="xls-csv-parser">
-    <parse-file @fileDataReceived="fileDataReceived"></parse-file>
+    <parse-file @fileDataReceived="fileDataReceived" :help="help"></parse-file>
     <br><br>
     <column-chooser
       v-if="showColumnChooser"
@@ -34,6 +34,9 @@
         type: String,
         default: () => null,
       },
+      help: {
+        type: String,
+      },
     },
     methods: {
       fileDataReceived(fileData) {
@@ -41,7 +44,7 @@
         const requiredColumns = this.columns.filter(column => !column.isOptional);
         if (fileData.length < requiredColumns.length) {
           // TODO: display list of required columns in alert box
-          alert(`You do not have enough columns. Required : ${this.columns.join(', ')}`); // eslint-disable-line
+          alert(`You do not have enough columns. Required columns are : ${this.columns.map(column => column.name).join(', ')}`); // eslint-disable-line
           return;
         }
         this.userColumns = fileData;

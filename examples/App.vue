@@ -2,7 +2,7 @@
   <div class="app">
     <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
     <br>
-    <xls-csv-parser :columns="columns" @onValidate="onValidate"></xls-csv-parser>
+    <xls-csv-parser :columns="columns" @onValidate="onValidate" :help="help"></xls-csv-parser>
     <br><br>
     <div class="results" v-if="results">
       <h3>Results:</h3>
@@ -33,6 +33,7 @@
           { name: 'Other', value: 'other', isOptional: true },
         ],
         results: null,
+        help: 'Necessary columns are: login, firstname and lastname',
       };
     },
   };
