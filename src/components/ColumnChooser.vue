@@ -1,5 +1,9 @@
 <template>
   <div class="catalog-column-chooser">
+    <a href="#" class="header-tool" @click="toggleHeaders">
+      {{ withHeaders ? 'This file does not include headers' : 'This file includes headers' }}
+    </a>
+    <br><br>
     <div v-for="(column, index) in localUserColumns">
       <div class="row">
         <div class="col-md-6">
@@ -13,11 +17,11 @@
                 :id="index"
                 v-model="column.selection"
                 deselect-label=""
-                selected-label="Selectionné"
-                select-label="Selectionner"
+                selected-label="Selected"
+                select-label="Select"
                 track-by="name"
                 label="name"
-                placeholder="Veuillez choisir une colonne"
+                placeholder="Please choose a column"
                 :options="column.options"
                 :searchable="false"
                 :allow-empty="false"
@@ -29,7 +33,7 @@
         <div class="col-md-6">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              Donneés pour la colonne <i>"{{ column.name }}"</i>
+              Data for column <i>"{{ column.name }}"</i>
             </div>
             <div class="panel-body">
               <div class="table-responsive">
@@ -51,8 +55,8 @@
         </div>
       </div>
     </div>
-    <div class="column-validation" v-if="showValidateButton">
-      <a href="#" @click="validate" id="validate-columns">Validate</a>
+    <div class="text-right" v-if="showValidateButton">
+      <button @click="validate" id="validate-columns" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </template>
@@ -130,9 +134,26 @@
           selection: null,
         }));
       },
+      toggleHeaders() {
+        if (this.withHeaders) {
+          this.localUserColumns.forEach((column, index) => {
+            const data = [column.name].concat(column.data);
+            column.name = `Column${index + 1}`; // eslint-disable-line
+            column.data = data; // eslint-disable-line
+            column.displayedData = _.take(column.data, 4); // eslint-disable-line
+          });
+        } else {
+          this.localUserColumns.forEach((column) => {
+            column.name = column.data.shift(); // eslint-disable-line
+            column.displayedData = _.take(column.data, 4); // eslint-disable-line
+          });
+        }
+        this.withHeaders = !this.withHeaders;
+      },
     },
     data() {
       return {
+        withHeaders: true,
         localUserColumns: [],
         requiredValues: [],
         optionalValues: [],
@@ -141,7 +162,6 @@
     },
     mounted() {
       this.fillLocalUserColumns(this.userColumns);
-      // TODO: refactor
       this.optionalValues = this.columns
         .filter(column => column.isOptional)
         .map(column => column.value);

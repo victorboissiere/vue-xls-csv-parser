@@ -2,8 +2,9 @@
   <div class="xls-csv-parser">
     <parse-file @fileDataReceived="fileDataReceived"></parse-file>
     <br><br>
-    <column-chooser v-if="showColumnChooser"
-                    ref="columnChooser"
+    <column-chooser
+      v-if="showColumnChooser"
+      ref="columnChooser"
       :userColumns="userColumns"
       :columns="columns"
       :showValidateButton="showValidateButton"
@@ -24,7 +25,6 @@
     name: 'XlsCsvParser',
     components: { ColumnChooser, ParseFile },
     props: {
-      // TODO: test and refactor
       columns: {
         type: Array,
         required: true,
@@ -54,6 +54,7 @@
       validate(event) {
         event.preventDefault();
         if (!this.showColumnChooser) {
+          // TODO: alert box
           alert('You need to select a file'); // eslint-disable-line
         } else {
           this.$refs.columnChooser.validate();

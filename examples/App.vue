@@ -1,9 +1,8 @@
 <template>
   <div class="app">
-    Example
+    <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
     <br>
-    <xls-csv-parser :columns="columns" validateButtonId="validate" @onValidate="onValidate"></xls-csv-parser>
-    <a href="https://gitcommit.fr" id="validate">Validate</a>
+    <xls-csv-parser :columns="columns" @onValidate="onValidate"></xls-csv-parser>
     <br><br>
     <div class="results" v-if="results">
       <h3>Results:</h3>
@@ -13,7 +12,7 @@
 </template>
 
 <script>
-  import XlsCsvParser from '../src/index';
+  import { XlsCsvParser } from '../src/index';
 
   export default {
     name: 'App',
