@@ -1,6 +1,6 @@
 {
   "name": "vue-xls-csv-parser",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "VueJS Xls/CSV parser with ability to match required columns",
   "author": "Victor Boissiere <contact@gitcommit.fr>",
   "main": "dist/xls-csv-parser.min.js",
