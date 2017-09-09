@@ -11,19 +11,20 @@
       @dragleave="dragging=false"
     >
       <div class="dropzone-text">
-        <span class="dropzone-title">Please select a file</span>
+        <span class="dropzone-title">{{ text[lang].file.select }}</span>
         <span class="dropzone-info" v-if="help">{{ help }}</span>
       </div>
       <input type="file" @change="upload">
     </div>
     <div class="dropzone-preview" v-else>
-      <button @click="file=null" class="btn btn-primary">Try with another file</button>
+      <button @click="file=null" class="btn btn-primary">{{ text[lang].file.tryAgain }}</button>
     </div>
   </div>
 </template>
 
 <script>
   import parseFile from '../parser';
+  import text from '../lang';
 
   export default {
     name: 'ParseFile',
@@ -31,22 +32,30 @@
       help: {
         type: String,
       },
+      lang: {
+        type: String,
+        default: () => 'en',
+      },
     },
     methods: {
       upload(event) {
         const files = event.target.files || event.dataTransfer.files;
         if (files.length !== 1) {
-          this.error = 'No files have been selected';
+          this.error = text[this.lang].error.fileSelection;
           return;
         }
         this.file = event.target.files[0];
         parseFile(this.file).then((results) => {
           this.error = null;
           this.$emit('fileDataReceived', results);
-        }).catch((error) => {
-          this.error = error;
+        }).catch(() => {
+          this.error = text[this.lang].error.invalidFile;
           this.file = null;
         });
+      },
+      reset() {
+        this.error = null;
+        this.file = null;
       },
     },
     data() {
@@ -54,6 +63,7 @@
         error: null,
         dragging: false,
         file: null,
+        text,
       };
     },
   };
@@ -65,7 +75,6 @@
   }
 
   .dropzone-area {
-    width: 80%;
     height: 200px;
     position: relative;
     border: 2px dashed #CBCBCB;

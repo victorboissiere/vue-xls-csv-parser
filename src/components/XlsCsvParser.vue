@@ -1,6 +1,6 @@
 <template>
   <div class="xls-csv-parser">
-    <parse-file @fileDataReceived="fileDataReceived" :help="help"></parse-file>
+    <parse-file @fileDataReceived="fileDataReceived" :help="help" ref="parseFile" :lang="lang"></parse-file>
     <br><br>
     <column-chooser
       v-if="showColumnChooser"
@@ -8,22 +8,30 @@
       :userColumns="userColumns"
       :columns="columns"
       :showValidateButton="showValidateButton"
+      :lang="lang"
       @onValidate="onValidate"
     ></column-chooser>
     <div class="parser-hidden-columns-input" v-for="(result, i) in results">
       <input type="hidden" v-for="(data, i) in result.data" :name="`${result.column}[${i}]`" :value="data">
     </div>
+    <simplert
+      :useRadius="true"
+      :useIcon="true"
+      ref="simplert">
+    </simplert>
   </div>
 </template>
 
 <script>
   import _ from 'lodash';
+  import Simplert from 'vue2-simplert';
   import ColumnChooser from './ColumnChooser';
   import ParseFile from './ParseFile';
+  import text from '../lang';
 
   export default {
     name: 'XlsCsvParser',
-    components: { ColumnChooser, ParseFile },
+    components: { ColumnChooser, ParseFile, Simplert },
     props: {
       columns: {
         type: Array,
@@ -37,14 +45,19 @@
       help: {
         type: String,
       },
+      lang: {
+        type: String,
+        validator: language => ['en', 'fr'].indexOf(language) !== -1,
+        default: () => 'en',
+      },
     },
     methods: {
       fileDataReceived(fileData) {
         this.results = [];
         const requiredColumns = this.columns.filter(column => !column.isOptional);
         if (fileData.length < requiredColumns.length) {
-          // TODO: display list of required columns in alert box
-          alert(`You do not have enough columns. Required columns are : ${this.columns.map(column => column.name).join(', ')}`); // eslint-disable-line
+          const message = `${text[this.lang].error.columnNumber}<br> ${this.columns.map(column => column.name).join('<br> ')}`;
+          this.showError(message);
           return;
         }
         this.userColumns = fileData;
@@ -57,11 +70,21 @@
       validate(event) {
         event.preventDefault();
         if (!this.showColumnChooser) {
-          // TODO: alert box
-          alert('You need to select a file'); // eslint-disable-line
+          this.showError(text[this.lang].error.fileNumber);
         } else {
           this.$refs.columnChooser.validate();
         }
+      },
+      showError(message) {
+        this.$refs.simplert.openSimplert({
+          title: text[this.lang].error.title,
+          message,
+          type: 'error',
+          customCloseBtnText: text[this.lang].close,
+          onClose: () => {
+            this.$refs.parseFile.reset();
+          },
+        });
       },
     },
     mounted() {
@@ -81,3 +104,4 @@
     },
   };
 </script>
+

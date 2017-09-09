@@ -1,6 +1,6 @@
 {
   "name": "vue-xls-csv-parser",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "VueJS Xls/CSV parser with ability to match required columns",
   "author": "Victor Boissiere <contact@gitcommit.fr>",
   "main": "dist/xls-csv-parser.min.js",
@@ -16,6 +16,7 @@
     "lodash": "^4.17.4",
     "vue": "^2.3.3",
     "vue-multiselect": "next",
+    "vue2-simplert": "^0.5.4",
     "xlsx": "^0.10.5"
   },
   "devDependencies": {
