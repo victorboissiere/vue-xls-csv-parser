@@ -1,13 +1,6 @@
 import { mount } from 'avoriaz';
 import ColumnChooser from '../../../src/components/ColumnChooser';
 
-function expectAlertToShow(message, callback) {
-  window.alert = (text) => {
-    expect(text).to.equals(message);
-    callback();
-  };
-}
-
 function createWrapper({ userColumns, columns }) {
   const wrapper = mount(ColumnChooser, { propsData: { userColumns, columns } });
   wrapper.update();
@@ -19,8 +12,9 @@ function validate(wrapper) {
 }
 
 function select(wrapper, columnNumber, optionNumber) {
-  wrapper.vm.$children[columnNumber].activate();
-  wrapper.vm.$children[columnNumber].select(wrapper.vm.$props.columns[optionNumber]);
+  // Skip Simplert child to test only vue select
+  wrapper.vm.$children[columnNumber + 1].activate();
+  wrapper.vm.$children[columnNumber + 1].select(wrapper.vm.$props.columns[optionNumber]);
 }
 
 describe('ColumnChooser component', () => {
@@ -47,7 +41,10 @@ describe('ColumnChooser component', () => {
         { name: 'column1', value: 'column1' },
       ],
     });
-    expectAlertToShow('You need to select all columns', () => done());
+    wrapper.vm.showError = (message) => {
+      expect(message).to.equals('You need to select all columns');
+      done();
+    };
     validate(wrapper);
   });
   it('should show an error if user has conflict', (done) => {
@@ -61,7 +58,10 @@ describe('ColumnChooser component', () => {
         { name: 'lastname', value: 'lastname' },
       ],
     });
-    expectAlertToShow('You need to select all columns', () => done());
+    wrapper.vm.showError = (message) => {
+      expect(message).to.equals('You need to select all columns');
+      done();
+    };
     select(wrapper, 0, 0);
     select(wrapper, 1, 0);
     validate(wrapper);
@@ -78,7 +78,10 @@ describe('ColumnChooser component', () => {
         { name: 'Firstname', value: 'firstname', isOptional: true },
       ],
     });
-    expectAlertToShow('Missing required columns: login', () => done());
+    wrapper.vm.showError = (message) => {
+      expect(message).to.equals('Missing required columns: login');
+      done();
+    };
     select(wrapper, 0, 1);
     select(wrapper, 1, 2);
     validate(wrapper);
