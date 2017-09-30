@@ -29,7 +29,7 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
 
 #### Example usage
 
-```vuejs
+```javascript
 <template>
   <div class="app">
     <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
