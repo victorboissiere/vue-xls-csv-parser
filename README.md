@@ -17,10 +17,10 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
 #### Props
 
 | Name        | Type           | Description  |
-| ------------- |:-------------:| -----:|
-| columns (required)      | Array | An array of object representing the columns you required (`[{ name: 'Student login', value: 'login', isOptional: false }]` |
-| validateButtonId      | String      |   The id of the custom validate button. The component validation button will not be displayed |
-| help | String      |  Help text shown on the file dropzone |
+| ------------ |:-------------:| -----:|
+| columns (required) | Array | An array of object representing the columns you required: `[{ name: 'Student login', value: 'login', isOptional: false }]` |
+| validateButtonId | String | The id of the custom validate button. The component validation button will not be displayed |
+| help | String  |  Help text shown on the file dropzone |
 | lang | String | `en` or `fr`. Default: `en` |
 
 #### Events
@@ -44,7 +44,7 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
 </template>
 
 <script>
-  import { XlsCsvParser } from '../src/index';
+  import { XlsCsvParser } from 'vue-xls-csv-parser';
   export default {
     name: 'App',
     components: {
