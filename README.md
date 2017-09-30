@@ -1,13 +1,75 @@
 # Vue XLS/CSV parser
 
-**Project currently in development. You should not use it in production for now**
-
-I hope to make a first usable version at the end of July/August 2017.
-Please come back soon.
+Demo website coming soon.
 
 ## Description
 
-Coming soon...
+This npm package will help you parse XLS/CSV files and validate them. The user will be asked to associate his file columns with the columns you require. Once validated, an event will be triggered where you will be able to get only the data you need.
+
+## Requirements
+
+You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
+
+## Components
+
+### XlsCsvParser
+
+#### Props
+
+| Name        | Type           | Description  |
+| ------------- |:-------------:| -----:|
+| columns (required)      | Array | An array of object representing the columns you required (`[{ name: 'Student login', value: 'login', isOptional: false }]` |
+| validateButtonId      | String      |   The id of the custom validate button. The component validation button will not be displayed |
+| help | String      |  Help text shown on the file dropzone |
+| lang | String | `en` or `fr`. Default: `en` |
+
+#### Events
+
+- `onValidate(results)`: all the data parsed by the component and returned after the user validation
+
+#### Example usage
+
+```vuejs
+<template>
+  <div class="app">
+    <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
+    <br>
+    <xls-csv-parser :columns="columns" @onValidate="onValidate" :help="help" lang="en"></xls-csv-parser>
+    <br><br>
+    <div class="results" v-if="results">
+      <h3>Results:</h3>
+      <pre>{{ JSON.stringify(results, null, 2) }}</pre>
+    </div>
+  </div>
+</template>
+
+<script>
+  import { XlsCsvParser } from '../src/index';
+  export default {
+    name: 'App',
+    components: {
+      XlsCsvParser,
+    },
+    methods: {
+      onValidate(results) {
+        this.results = results;
+      },
+    },
+    data() {
+      return {
+        columns: [
+          { name: 'Student login', value: 'login' },
+          { name: 'Student firstname', value: 'firstname' },
+          { name: 'Student lastname', value: 'lastname' },
+          { name: 'Other', value: 'other', isOptional: true },
+        ],
+        results: null,
+        help: 'Necessary columns are: login, firstname and lastname',
+      };
+    },
+  };
+</script>
+```
 
 ## Tests
 
@@ -17,22 +79,11 @@ Simpliy run `yarn mocha`.
 
 ``` bash
 # install dependencies
-npm install
+yarn intall
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn start
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+# build for a release
+yarn bundle:dist
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
