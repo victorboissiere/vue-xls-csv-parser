@@ -44,7 +44,7 @@ export default {
     error: {
       title: 'Erreur',
       columnNumber: 'Vous n\'avez pas assez de colonnes. <br><b>Vous devez avoir les colonnes suivantes</b>: ',
-      missingColumns: 'Les colonnes nécéssaires suivantes manques:',
+      missingColumns: 'Les colonnes nécéssaires suivantes manquent:',
       selectColumn: 'Vous devez remplir toutes les colonnes',
       fileNumber: 'Vous devez choisir un fichier',
       fileSelection: 'Aucun fichier n\'a été selectionné',
