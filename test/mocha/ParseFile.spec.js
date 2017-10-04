@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 const parseXlsxFile = require('../../src/parser/xlsx-parser').default;
+const lang = require('../../src/lang').default;
 
 describe('File parsing', () => {
   const xlsxTests = [
@@ -28,11 +29,6 @@ describe('File parsing', () => {
       columnNumber: 2,
       rowNumber: 2,
     },
-    {
-      filename: 'cheese',
-      description: 'Test uneven file',
-      errorMessage: 'File has some undefined values',
-    },
   ];
 
   const csvTests = [
@@ -58,8 +54,8 @@ describe('File parsing', () => {
   ];
 
   const runTests = (tests, directory, extension) => tests.forEach((test) => {
-    it(`[${directory}] test.description`, () =>
-      parseXlsxFile(`./test/mocha/data/${directory}/${test.filename}.${extension}`).then(({ worksheet }) => {
+    it(`[${directory}] ${test.description}`, () =>
+      parseXlsxFile(`./test/mocha/data/${directory}/${test.filename}.${extension}`, lang.en).then(({ worksheet }) => {
         expect(test).to.not.have.key('errorMessage');
         expect(worksheet).to.be.an('array');
         expect(worksheet).to.have.lengthOf(test.columnNumber, 'Wrong number of columns');
@@ -70,7 +66,7 @@ describe('File parsing', () => {
         });
       }).catch((errorData) => {
         if (!_.has(test, 'errorMessage')) {
-          throw new Error(`Should not have failed with error : ${errorData}`);
+          throw new Error(`Should not ave failed with error : ${errorData}`);
         } else {
           expect(errorData.error).to.equals(test.errorMessage);
         }
