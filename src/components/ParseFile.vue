@@ -45,11 +45,11 @@
           return;
         }
         this.file = event.target.files[0];
-        parseFile(this.file).then((results) => {
+        parseFile(this.file, text[this.lang]).then((results) => {
           this.error = null;
           this.$emit('fileDataReceived', results);
-        }).catch(() => {
-          this.error = text[this.lang].error.invalidFile;
+        }).catch((error) => {
+          this.error = error;
           this.file = null;
         });
       },

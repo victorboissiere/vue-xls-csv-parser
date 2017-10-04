@@ -1,10 +1,10 @@
 import parseXlsx from './xlsx-parser';
 
-function parseFileExcelFile(file, callback) {
+function parseFileExcelFile(file, lang, callback) {
   const reader = new FileReader();
 
   reader.onload = event =>
-    parseXlsx(event.target.result)
+    parseXlsx(event.target.result, lang)
     .then(result => callback(result))
     .catch(error => callback(error));
 
@@ -12,9 +12,9 @@ function parseFileExcelFile(file, callback) {
 }
 
 
-export default htmlFile =>
+export default (htmlFile, lang) =>
   new Promise((resolve, reject) => {
-    parseFileExcelFile(htmlFile, (result) => {
+    parseFileExcelFile(htmlFile, lang, (result) => {
       if (result.error) {
         return reject(result.error);
       }

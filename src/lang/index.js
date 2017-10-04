@@ -22,6 +22,8 @@ export default {
       fileNumber: 'You need to select a file',
       fileSelection: 'No file have been selected',
       invalidFile: 'This file is invalid. Try to use a CSV or Xlsx file',
+      noWorksheet: 'Must have at least one worksheet',
+      emptyWorksheet: 'The worksheet is empty',
     },
   },
   fr: {
@@ -47,6 +49,8 @@ export default {
       fileNumber: 'Vous devez choisir un fichier',
       fileSelection: 'Aucun fichier n\'a été selectionné',
       invalidFile: 'Ce fichier est invalide. Veuillez essayer avec un fichier CSV ou Xlsx',
+      noWorksheet: 'Le fichier doit avoir au moins une feuille de calcul',
+      emptyWorksheet: 'Ce fichier est vide',
     },
   },
 };
