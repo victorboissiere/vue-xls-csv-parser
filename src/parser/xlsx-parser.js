@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import XLSX from 'xlsx';
 
-export default (file, lang) => {
-  const workbook = typeof window === 'undefined' ? XLSX.readFile(file) : XLSX.read(file, { type: 'binary' });
+export default (file, lang, type) => {
+  const workbook = typeof window === 'undefined' ? XLSX.readFile(file) : XLSX.read(file, { type });
   const sheetNames = workbook.SheetNames;
   if (sheetNames.length === 0) {
     return Promise.reject({ error: lang.error.noWorksheet });
@@ -12,8 +12,8 @@ export default (file, lang) => {
     header: 1,
     defVal: '',
     blankrows: false,
-    blankcolumns: false,
   });
+
 
   if (json.length === 0) {
     return Promise.reject({ error: lang.error.emptyWorksheet });

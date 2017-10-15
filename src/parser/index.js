@@ -3,12 +3,18 @@ import parseXlsx from './xlsx-parser';
 function parseFileExcelFile(file, lang, callback) {
   const reader = new FileReader();
 
-  reader.onload = event =>
-    parseXlsx(event.target.result, lang)
-    .then(result => callback(result))
-    .catch(error => callback(error));
+  const type = file.type && file.type === 'text/csv' ? 'string' : 'binary';
 
-  reader.readAsBinaryString(file);
+  reader.onload = event =>
+    parseXlsx(event.target.result, lang, type)
+      .then(result => callback(result))
+      .catch(error => callback(error));
+
+  if (type === 'string') {
+    reader.readAsText(file);
+  } else {
+    reader.readAsBinaryString(file);
+  }
 }
 
 
