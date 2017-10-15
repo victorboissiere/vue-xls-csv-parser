@@ -16,11 +16,11 @@
       </div>
       <input type="file" @change="upload">
     </div>
-    <div v-if="showLoadingFile">
-      {{ text[lang].loadingFile }}
-    </div>
     <div class="dropzone-preview" v-else>
       <button @click="file=null" class="btn btn-primary">{{ text[lang].file.tryAgain }}</button>
+    </div>
+    <div v-if="showLoadingFile">
+      {{ text[lang].loadingFile }}
     </div>
   </div>
 </template>
