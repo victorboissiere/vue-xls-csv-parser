@@ -12,6 +12,7 @@ export default (file, lang) => {
     header: 1,
     defVal: '',
     blankrows: false,
+    blankcolumns: false,
   });
 
   if (json.length === 0) {

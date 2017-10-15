@@ -8,6 +8,7 @@ export default {
     selected: 'Selected',
     select: 'Select',
     selectColumn: 'Please choose a column',
+    loadingFile: 'Loading file...',
     file: {
       select: 'Please select a file',
       tryAgain: 'Choose another file',
@@ -35,6 +36,7 @@ export default {
     selected: 'Selectionné',
     select: 'Choisir',
     selectColumn: 'Veuillez choisir une colonne',
+    loadingFile: 'Chargement du fichier',
     file: {
       select: 'Veuillez selectionner un fichier',
       tryAgain: 'Choisir un autre fichier',

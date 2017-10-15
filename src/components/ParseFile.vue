@@ -16,6 +16,9 @@
       </div>
       <input type="file" @change="upload">
     </div>
+    <div v-if="showLoadingFile">
+      {{ text[lang].loadingFile }}
+    </div>
     <div class="dropzone-preview" v-else>
       <button @click="file=null" class="btn btn-primary">{{ text[lang].file.tryAgain }}</button>
     </div>
@@ -39,21 +42,26 @@
     },
     methods: {
       upload(event) {
+        this.showLoadingFile = true;
         const files = event.target.files || event.dataTransfer.files;
         if (files.length !== 1) {
+          this.showLoadingFile = false;
           this.error = text[this.lang].error.fileSelection;
           return;
         }
         this.file = event.target.files[0];
         parseFile(this.file, text[this.lang]).then((results) => {
+          this.showLoadingFile = false;
           this.error = null;
           this.$emit('fileDataReceived', results);
         }).catch((error) => {
+          this.showLoadingFile = false;
           this.error = error;
           this.file = null;
         });
       },
       reset() {
+        this.showLoadingFile = false;
         this.error = null;
         this.file = null;
       },
@@ -63,6 +71,7 @@
         error: null,
         dragging: false,
         file: null,
+        showLoadingFile: false,
         text,
       };
     },
