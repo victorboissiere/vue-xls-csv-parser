@@ -8,7 +8,11 @@ function parseFileExcelFile(file, lang, callback) {
     .then(result => callback(result))
     .catch(error => callback(error));
 
-  reader.readAsBinaryString(file);
+  if (file.type === 'text/csv') {
+    reader.readAsText(file);
+  } else {
+    reader.readAsBinaryString(file);
+  }
 }
 
 
