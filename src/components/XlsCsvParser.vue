@@ -9,7 +9,7 @@
       :columns="columns"
       :showValidateButton="showValidateButton"
       :lang="lang"
-      @onValidate="onValidate"
+      @on-validate="onValidate"
     ></column-chooser>
     <div class="parser-hidden-columns-input" v-for="(result, i) in results">
       <input type="hidden" v-for="(data, i) in result.data" :name="`${result.column}[${i}]`" :value="data">

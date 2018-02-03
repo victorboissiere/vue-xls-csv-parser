@@ -132,7 +132,7 @@
             column: localColumn.selection.value,
             data: localColumn.data,
           }));
-          this.$emit('onValidate', this.results);
+          this.$emit('on-validate', this.results);
         }
       },
       fillLocalUserColumns(newColumns) {

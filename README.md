@@ -34,7 +34,7 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
   <div class="app">
     <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
     <br>
-    <xls-csv-parser :columns="columns" @onValidate="onValidate" :help="help" lang="en"></xls-csv-parser>
+    <xls-csv-parser :columns="columns" @on-validate="onValidate" :help="help" lang="en"></xls-csv-parser>
     <br><br>
     <div class="results" v-if="results">
       <h3>Results:</h3>
