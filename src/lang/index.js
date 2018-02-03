@@ -20,7 +20,7 @@ export default {
       missingColumns: 'Missing required columns:',
       selectColumn: 'You need to select all columns',
       fileNumber: 'You need to select a file',
-      fileSelection: 'No file have been selected',
+      fileSelection: 'No file has been selected',
       invalidFile: 'This file is invalid. Try to use a CSV or Xlsx file',
       noWorksheet: 'Must have at least one worksheet',
       emptyWorksheet: 'The worksheet is empty',
