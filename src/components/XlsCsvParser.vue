@@ -65,7 +65,7 @@
       },
       onValidate(results) {
         this.results = results;
-        this.$emit('onValidate', results);
+        this.$emit('on-validate', results);
       },
       validate(event) {
         event.preventDefault();
