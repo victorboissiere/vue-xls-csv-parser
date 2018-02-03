@@ -1,10 +1,10 @@
 # Vue XLS/CSV parser
 
-Demo website coming soon.
-
 ## Description
 
 This npm package will help you parse XLS/CSV files and validate them. The user will be asked to associate his file columns with the columns you require. Once validated, an event will be triggered where you will be able to get only the data you need.
+
+![Demo](wiki/demo.gif)
 
 ## Requirements
 
@@ -21,7 +21,7 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
 | columns (required) | Array | An array of object representing the columns you required: `[{ name: 'Student login', value: 'login', isOptional: false }]` |
 | validateButtonId | String | The id of the custom validate button. The component validation button will not be displayed |
 | help | String  |  Help text shown on the file dropzone |
-| lang | String | `en` or `fr`. Default: `en` |
+| lang | String | `en`, `nl` or `fr`. Default: `en` |
 
 #### Events
 
@@ -29,7 +29,7 @@ You will need Bootstrap 3.x. It has not been tested yet with Boostrap 4.
 
 #### Example usage
 
-```javascript
+```html
 <template>
   <div class="app">
     <h3>Example - Import file with required login, firstname, lastname and optional values</h3>
