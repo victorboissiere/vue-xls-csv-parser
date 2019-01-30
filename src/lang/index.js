@@ -98,12 +98,12 @@ export default {
     error: {
       title: 'Erro',
       columnNumber:
-        'Seu arquivo nao possui colunas suficientes. <br><b>Colunas necessarias: </b>: ',
+        'Seu arquivo não possui colunas suficientes. <br><b>Colunas necessárias: </b>: ',
       missingColumns: 'Está faltando as colunas:',
       selectColumn: 'Você precisa selecionar todas as colunas',
       fileNumber: 'Você precisa selecionar um arquivo',
       fileSelection: 'Nenhum arquivo selecionado',
-      invalidFile: 'Este arquivo é invalido. Use um arquivo CSV ou XLSX',
+      invalidFile: 'Este arquivo é inválido. Use um arquivo CSV ou XLSX',
       noWorksheet: 'Deve haver ao menos uma planilha',
       emptyWorksheet: 'Esta planilha está vazia',
     },
