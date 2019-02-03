@@ -80,4 +80,32 @@ export default {
       emptyWorksheet: 'Het werkblad is leeg',
     },
   },
+  ptBR: {
+    column: 'Coluna',
+    submit: 'Enviar',
+    close: 'OK',
+    columnData: 'Informação por coluna',
+    chooseColumn: 'Escolha uma coluna',
+    selected: 'Selecionado',
+    select: 'Selecionar',
+    selectColumn: 'Por favor escolha uma coluna',
+    file: {
+      select: 'Por favor selecione um arquivo',
+      tryAgain: 'Escolha outro arquivo',
+      withHeaders: 'Este arquivo inclui cabeçalho',
+      withoutHeaders: 'Este arquivo não inclui cabeçalho',
+    },
+    error: {
+      title: 'Erro',
+      columnNumber:
+        'Seu arquivo não possui colunas suficientes. <br><b>Colunas necessárias: </b>: ',
+      missingColumns: 'Está faltando as colunas:',
+      selectColumn: 'Você precisa selecionar todas as colunas',
+      fileNumber: 'Você precisa selecionar um arquivo',
+      fileSelection: 'Nenhum arquivo selecionado',
+      invalidFile: 'Este arquivo é inválido. Use um arquivo CSV ou XLSX',
+      noWorksheet: 'Deve haver ao menos uma planilha',
+      emptyWorksheet: 'Esta planilha está vazia',
+    },
+  },
 };
