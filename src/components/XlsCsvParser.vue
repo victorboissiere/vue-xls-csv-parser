@@ -47,7 +47,7 @@
       },
       lang: {
         type: String,
-        validator: language => ['en', 'fr'].indexOf(language) !== -1,
+        validator: language => ['en', 'fr', 'ptBR', 'de'].indexOf(language) !== -1,
         default: () => 'en',
       },
     },
