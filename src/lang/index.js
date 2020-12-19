@@ -108,4 +108,33 @@ export default {
       emptyWorksheet: 'Esta planilha está vazia',
     },
   },
+  de: {
+    column: 'Spalten',
+    submit: 'Absenden',
+    close: 'OK',
+    columnData: 'Daten für Spalte',
+    chooseColumn: 'Wähle eine Spalte',
+    selected: 'Ausgewählt',
+    select: 'Auswählen',
+    selectColumn: 'Bitte eine Spalte auswählen',
+    file: {
+      select: 'Bitte Datei auswählen',
+      tryAgain: 'Bitte eine andere Datei auswählen',
+      withHeaders: 'Datei enthält Kopfzeilen',
+      withoutHeaders: 'Datei enthält keine Kopfzeilen',
+    },
+    error: {
+      title: 'Fehler',
+      columnNumber:
+        'Du hast zu wenig Spalten. <br><b>Erforderliche Spalten sind:</b>: ',
+      missingColumns: 'Erforderliche Spalten fehlen:',
+      selectColumn: 'Alle Spalten müssen ausgewählt sein',
+      fileNumber: 'Eine Datei wird benötigt',
+      fileSelection: 'Keine Datei ausgewählt',
+      invalidFile:
+        'Diese Datei ist ungültig. Bitte eine CSV oder Xlsx Datei auswählen',
+      noWorksheet: 'Mindestens ein Arbeitsblatt erforderlich',
+      emptyWorksheet: 'Die Tabelle ist leer',
+    },
+  },
 };
